@@ -63,9 +63,13 @@ public class Parents {
         wait.until((WebDriver d) -> select_element.findElements(option_locator).size() > 1);
     }
 
-    public void wait_list(List<WebElement> list)
+    public void wait_jobs_loaded(List<WebElement> jobs, int size) {
+        wait.until((WebDriver d) -> jobs.size() == size);
+    }
+
+    public void wait_job_texts_loaded(List<WebElement> list)
     {
-        wait.until(ExpectedConditions.visibilityOfAllElements(list));
+        wait.until(driver -> list.stream().allMatch(element -> element.getText() != null && !element.getText().isEmpty()));
     }
 
     public boolean isContains(String str1, String str2)

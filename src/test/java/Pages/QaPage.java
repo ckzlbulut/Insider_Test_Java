@@ -12,6 +12,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import Utilities.BaseDriver;
 import Utilities.Parents;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import java.util.List;
 
 
@@ -68,13 +70,13 @@ public class QaPage extends Parents {
         selectByText(filterLocation,"Istanbul, Turkey");
 
         scrollWithJS(positionFilter);
-
     }
 
-    public void assert_job_list_presence()
+    public void assert_job_list_presence(int size)
     {
-        wait_list(jobList);
-        Assert.assertTrue(jobList.size()>0);
+        wait_jobs_loaded(jobList, size);
+        wait_job_texts_loaded(jobList);
+        Assert.assertEquals(jobList.size(), size);
     }
 
     public void assert_positions_contains(String title)
@@ -123,7 +125,7 @@ public class QaPage extends Parents {
             Actions actions1 = new Actions(driver);
             actions1.moveToElement(job_post).perform();
 
-            WebElement apply_button = BaseDriver.wait.until(ExpectedConditions.elementToBeClickable(applyNow));
+            WebElement apply_button = job_post.findElement(applyNow);
             apply_button.click();
 
             String new_window = getNewWindowHandle(postion_page_window, driver.getWindowHandles());

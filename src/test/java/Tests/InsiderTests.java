@@ -40,7 +40,7 @@ public class InsiderTests extends Parents {
         qaPage.click_see_all_qa_jobs();
 
         qaPage.select_location("Istanbul, Turkey");
-        qaPage.assert_job_list_presence();
+        qaPage.assert_job_list_presence(2);
     }
 
 
